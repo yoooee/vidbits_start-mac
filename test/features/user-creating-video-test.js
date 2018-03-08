@@ -6,7 +6,7 @@ describe('User can fill out a form to submit a video', () => {
       const testTitle = 'Barrel Aged Homebrewing';
       const testDescription = 'A video about barrel aged beer brewing.';
 
-      browser.url('/videos/create.html');
+      browser.url('/videos/create');
 
       // Set form fields with fake data.
       browser.setValue('#title-input', testTitle);
