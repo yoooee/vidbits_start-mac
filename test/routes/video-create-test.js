@@ -9,8 +9,8 @@ describe('Server path: /videos', () => {
   beforeEach(connectDatabase);
   afterEach(disconnectDatabase);
 
-  describe('POST', () => {
-    it('returns a 201 status code', async () => {
+  describe('POST /videos', () => {
+    it('saves the video to the database', async () => {
       const videoToCreate = {
         title: 'A beer video',
         description: 'A video about delicious beer.'
@@ -21,31 +21,13 @@ describe('Server path: /videos', () => {
         .type('form')
         .send(videoToCreate);
 
-      assert.equal(response.status, 201);
-    });
+      assert.equal(response.status, 302);
+      assert.equal(response.header['location'], '/');
 
-    describe('submits a video with a title and description', () => {
-      it('saves the video to the database', async () => {
-        const videoToCreate = {
-          title: 'A beer video',
-          description: 'A video about delicious beer.'
-        };
+      const dbVideo = await Video.findOne({});
 
-        const response = await request(app)
-          .post('/videos')
-          .type('form')
-          .send(videoToCreate);
-
-        assert.equal(response.status, 201);
-
-        assert.equal(response.body.title, videoToCreate.title);
-        assert.equal(response.body.description, videoToCreate.description);
-
-        const dbVideo = await Video.findOne({});
-
-        assert.equal(dbVideo.title, videoToCreate.title);
-        assert.equal(dbVideo.description, videoToCreate.description);
-      });
+      assert.equal(dbVideo.title, videoToCreate.title);
+      assert.equal(dbVideo.description, videoToCreate.description);
     });
   });
 });

@@ -10,7 +10,7 @@ router.post('/', async (req, res, next) => {
   // Save to database
   await video.save();
 
-  res.status(201).send(video);
+  res.redirect('/');
 });
 
 module.exports = router;
