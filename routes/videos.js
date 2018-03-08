@@ -1,7 +1,11 @@
 const router = require('express').Router();
 const Video = require('../models/video');
 
-router.post('/', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
+  res.render('index');
+});
+
+router.post('/videos', async (req, res, next) => {
   const video = new Video({
     title: req.body.title,
     description: req.body.description
