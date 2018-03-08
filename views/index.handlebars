@@ -1,4 +1,10 @@
 <div class="contents-container" id="videos-container">
+  {{#each videos as |video|}}
+    <div class="video">
+      <span class="title">{{ video.title }}</span>
+      <span class="description">{{ video.description }}</span>
+    </div>
+  {{/each}}
 </div>
 
 <a href="videos/create" class="add-video">Add Video</a>
