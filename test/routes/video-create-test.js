@@ -21,8 +21,7 @@ describe('Server path: /videos', () => {
         .type('form')
         .send(videoToCreate);
 
-      assert.equal(response.status, 302);
-      assert.equal(response.header['location'], '/');
+      assert.equal(response.status, 201);
 
       const dbVideo = await Video.findOne({});
 

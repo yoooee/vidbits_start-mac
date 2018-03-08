@@ -1,7 +1,7 @@
 const {assert} = require('chai');
 
 describe('User visits root', () => {
-  describe('without existing items', () => {
+  describe('and there are no videos in the database', () => {
     it('the videos-container should be blank', () => {
 
       browser.url('/');
@@ -9,8 +9,8 @@ describe('User visits root', () => {
     });
   });
 
-  describe('navigates to create page', () => {
-    it('loads the videos/create.html', () => {
+  describe('and clicks the create video button', () => {
+    it('the browser navigates to the create video page', () => {
       // Setup
       const expectedPageTitle = 'Save a video';
       let actualPageTitle = '';
