@@ -15,6 +15,7 @@ describe('User visits landing page', () => {
   });
 
   describe('and there are videos in the database', () => {
+
     let video1;
     let video2;
 
@@ -38,6 +39,14 @@ describe('User visits landing page', () => {
 
       assert.include(browser.getText('#videos-container'), video2.title);
       assert.include(browser.getText('#videos-container'), video2.description);
+    });
+
+    it('display videos in an iframe with the videos source', () => {
+      browser.url('/');
+      //TODO: Is this the right way to do this?
+      const iframes = browser.getAttribute('.video-player', 'src');
+
+      assert.equal(iframes[0], 'http://www.youtube.com/');
     });
   });
 

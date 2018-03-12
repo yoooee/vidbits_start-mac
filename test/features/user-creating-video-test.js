@@ -16,6 +16,7 @@ describe('User can fill out a form to submit a video', () => {
       browser.click('button[id="submit-button"]');
 
       // We should now be on the landing page.
+      // TODO: How Do I get the ID?
       assert.equal(browser.getUrl(), `${browser.options.baseUrl}/videos`);
 
       // We should see our video with testTitle and testDescription appear.

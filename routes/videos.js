@@ -3,23 +3,38 @@ const Video = require('../models/video');
 
 router.get('/', async (req, res, next) => {
   const videos = await Video.find();
-  res.render('index', { videos });
+  res.render('videos/index', { videos });
 });
 
-router.get('/videos/create', (req, res, next) => {
+router.get('/create', (req, res, next) => {
   res.render('videos/create');
 });
 
-router.post('/videos', async (req, res, next) => {
+router.get('/:videoid', async (req, res, next) => {
+  const videoId = req.params.videoid;
+  const video = await Video.findById(videoId);
+
+  res.render('videos/show', {video});
+});
+
+router.post('/', async (req, res, next) => {
+
   const video = new Video({
     title: req.body.title,
     description: req.body.description
   });
 
-  // Save to database
-  await video.save();
+  //video.validateSync();
 
-  res.status(201).render('videos/show', { video });
+  //if(video.errors) {
+  if(!video.title){
+    res.status(400).render('videos/create', {video: video, error: 'title is required'});
+  } else {
+
+    // Save to database
+    await video.save();
+    res.redirect(302, `videos/${video._id}`);
+  }
 });
 
 module.exports = router;

@@ -1,8 +1,13 @@
+<p>CREATE PAGE</p>
 <div class="contents-container">
   <h3>Save a video</h3>
+  {{#if error}}
+    <span>{{error}}</span>
+  {{/if}}
   <form action="/videos" method="post">
     <input type="text" id="title-input" name="title">
-    <input type="text" id="description-input" name="description">
+    <input type="text" id="url-input" name="url">
+    <textarea type="text" id="description-input" name="description">{{video.description}}</textarea>
     <button type="submit" id="submit-button">Submit</button>
   </form>
 </div>
