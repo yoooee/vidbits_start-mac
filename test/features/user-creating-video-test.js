@@ -13,6 +13,7 @@ describe('User can fill out a form to submit a video', () => {
       createVideoUsingBrowser(testTitle, testUrl, testDescription);
 
       assert.include(browser.getText('.video-title'), testTitle);
+      assert.include(browser.getAttribute('.video-player', 'src'), testUrl);
       assert.include(browser.getText('.video-description'), testDescription);
     });
   });

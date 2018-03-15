@@ -13,11 +13,11 @@ describe('Server path: /videos', () => {
 
   describe('POST /videos', () => {
 
-    it('saves the video to the database', async () => {
+    it('saves the video to the database and redirects to the detail page', async () => {
 
       const videoToCreate = {
         title: 'A beer video',
-        videoUrl: generateRandomUrl('youtube.com'),
+        url: generateRandomUrl('youtube.com'),
         description: 'A video about delicious beer.'
       };
 
@@ -29,29 +29,17 @@ describe('Server path: /videos', () => {
       const dbVideo = await Video.findOne({});
 
       assert.equal(response.status, 302);
-      assert.include(dbVideo, videoToCreate);
-    });
+      assert.equal(response.headers['location'], `/videos/${dbVideo.id}`);
 
-    it('redirects to the video detail page on successful submission', async () => {
-
-      const videoToCreate = {
-        title: 'Beer Video',
-        videoUrl: generateRandomUrl('youtube.com'),
-        description: 'A video about delicious beer.'
-      };
-
-      const response = await request(app)
-        .post('/videos')
-        .type('form')
-        .send(videoToCreate);
-
-      assert.equal(response.status, 302);
+      assert.equal(dbVideo.title, videoToCreate.title);
+      assert.equal(dbVideo.videoUrl, videoToCreate.url);
+      assert.equal(dbVideo.description, videoToCreate.description);
     });
 
     it('does not save videos if the title is missing', async () => {
 
       const videoToCreate = {
-        videoUrl: generateRandomUrl('youtube.com'),
+        url: generateRandomUrl('youtube.com'),
         description: 'A video about delicious beer.'
       };
 
@@ -69,7 +57,7 @@ describe('Server path: /videos', () => {
     it('displays the create video form when the title is missing', async () => {
 
       const videoToCreate = {
-        videoUrl: generateRandomUrl('youtube.com'),
+        url: generateRandomUrl('youtube.com'),
         description: 'A video about delicious beer.'
       };
 
@@ -88,7 +76,7 @@ describe('Server path: /videos', () => {
 
       const videoToCreate = {
         title: '',
-        videoUrl: generateRandomUrl('youtube.com'),
+        url: generateRandomUrl('youtube.com'),
         description: 'A video about delicious beer.'
       };
 
@@ -123,7 +111,7 @@ describe('Server path: /videos', () => {
 
       const videoToCreate = {
         title: '',
-        videoUrl: generateRandomUrl('youtube.com'),
+        url: generateRandomUrl('youtube.com'),
         description: 'A video about delicious beer.'
       };
 
@@ -132,7 +120,7 @@ describe('Server path: /videos', () => {
         .type('form')
         .send(videoToCreate);
 
-      assert.include(response.text, videoToCreate.videoUrl);
+      assert.include(response.text, videoToCreate.url);
       assert.include(response.text, videoToCreate.description);
     });
   });

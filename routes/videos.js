@@ -30,7 +30,7 @@ router.post('/:videoid/updates', async (req, res, next) => {
   const video = await Video.findById(videoId);
 
   video.title = req.body.title;
-  video.videoUrl = req.body.videoUrl;
+  video.videoUrl = req.body.url;
   video.description = req.body.description;
 
   video.validateSync();
@@ -58,7 +58,7 @@ router.post('/', async (req, res, next) => {
 
   const video = new Video({
     title: req.body.title,
-    videoUrl: req.body.videoUrl,
+    videoUrl: req.body.url,
     description: req.body.description
   });
 

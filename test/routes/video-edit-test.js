@@ -4,7 +4,7 @@ const {jsdom} = require('jsdom');
 const Video = require('../../models/video');
 const app = require('../../app.js');
 const {connectDatabase, disconnectDatabase} = require('../database-utilities');
-const {seedVideoToDatabase, findElement} = require('../test-utils');
+const {seedVideoToDatabase, findElement, generateRandomUrl} = require('../test-utils');
 
 describe('Server path: /videos/:id/edit', () => {
 
@@ -40,7 +40,7 @@ describe('Server path: /videos/:id/edit', () => {
       const updateVideoParams = {
         title: 'new video title',
         description: 'updated video title',
-        videoUrl: 'http://new-video-url.com'
+        url: generateRandomUrl('youtube.com')
       };
 
       const response = await request(app)
@@ -53,7 +53,7 @@ describe('Server path: /videos/:id/edit', () => {
       assert.equal(updatedVideo.id, existingVideo.id);
       assert.equal(updatedVideo.title, updateVideoParams.title);
       assert.equal(updatedVideo.description, updateVideoParams.description);
-      assert.equal(updatedVideo.videoUrl, updateVideoParams.videoUrl);
+      assert.equal(updatedVideo.videoUrl, updateVideoParams.url);
 
       assert.equal(response.status, 302);
     });
@@ -65,7 +65,7 @@ describe('Server path: /videos/:id/edit', () => {
       const updateVideoParams = {
         title: '',
         description: 'updated video title',
-        videoUrl: 'http://new-video-url.com'
+        url: generateRandomUrl('youtube.com')
       };
 
       const response = await request(app)
@@ -82,7 +82,7 @@ describe('Server path: /videos/:id/edit', () => {
       const descriptionInput = findElement(response.text, '#description-input');
 
       assert.equal(titleInput.value, updateVideoParams.title);
-      assert.equal(videoUrlInput.value, updateVideoParams.videoUrl);
+      assert.equal(videoUrlInput.value, updateVideoParams.url);
       assert.equal(descriptionInput.value, updateVideoParams.description);
     });
   });
