@@ -55,5 +55,25 @@ describe('Server path: /videos/:id/edit', () => {
 
       assert.equal(response.status, 302);
     });
+
+    it('returns in a status of 400 when invalid input is submitted', async () => {
+
+      const existingVideo = await seedVideoToDatabase();
+
+      const updateVideoParams = {
+        title: '',
+        description: 'updated video title',
+        videoUrl: 'http://new-video-url.com'
+      };
+
+      const response = await request(app)
+        .put(`/videos/${existingVideo._id}`)
+        .type('form')
+        .send(updateVideoParams);
+
+      const updatedVideo = await Video.findOne();
+
+      assert.equal(response.status, 400);
+    });
   });
 });
