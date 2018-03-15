@@ -4,7 +4,7 @@ const Video = require('../models/video');
 // Create and return a sample Video object
 const buildVideoObject = (options = {}) => {
   const title = options.title || 'My favorite video';
-  const videoUrl = options.videoUrl || 'http://www.youtube.com';
+  const videoUrl = options.videoUrl || generateRandomUrl('youtube.com');
   const description = options.description || 'Just the best video';
   return {title, videoUrl, description};
 };
@@ -13,6 +13,11 @@ const buildVideoObject = (options = {}) => {
 const seedVideoToDatabase = async (options = {}) => {
   const video = await Video.create(buildVideoObject(options));
   return video;
+};
+
+// Create and return a random url
+const generateRandomUrl = (domain) => {
+  return `http://${domain}/${Math.random()}`;
 };
 
 // extract text from an Element by selector.
@@ -25,8 +30,20 @@ const parseTextFromHTML = (htmlAsString, selector) => {
   }
 };
 
+// Find iFrame with specific src.
+const findIFrameElementBySource = (htmlAsString, src) => {
+  const iframe = jsdom(htmlAsString).querySelector(`iframe[src="${src}"]`);
+  if (iframe !== null) {
+    return iframe;
+  } else {
+    throw new Error(`IFrame with src "${src}" not found in HTML string`);
+  }
+};
+
 module.exports = {
   buildVideoObject,
   seedVideoToDatabase,
-  parseTextFromHTML
+  generateRandomUrl,
+  parseTextFromHTML,
+  findIFrameElementBySource
 };

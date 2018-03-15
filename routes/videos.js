@@ -21,16 +21,15 @@ router.post('/', async (req, res, next) => {
 
   const video = new Video({
     title: req.body.title,
+    videoUrl: req.body.videoUrl,
     description: req.body.description
   });
 
-  //video.validateSync();
+  video.validateSync();
 
-  //if(video.errors) {
-  if(!video.title){
-    res.status(400).render('videos/create', {video: video, error: 'title is required'});
+  if(video.errors) {
+    res.status(400).render('videos/create', {video: video});
   } else {
-
     // Save to database
     await video.save();
     res.redirect(302, `videos/${video._id}`);

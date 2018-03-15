@@ -1,9 +1,10 @@
 <p>INDEX PAGE</p>
 <div class="contents-container" id="videos-container">
   {{#each videos as |video|}}
+  {{video}}
     <div class="video">
-      <span class="title">{{ video.title }}</span>
-      <iframe class="video-player" src="http://www.youtube.com" frameborder="0" allowfullscreen></iframe>
+      <span class="title"><a href="videos/{{video._id}}" class="video-title">{{ video.title }}</a></span>
+      <iframe class="video-player" src="{{video.videoUrl}}" frameborder="0" allowfullscreen></iframe>
       <span class="description">{{ video.description }}</span>
     </div>
   {{/each}}

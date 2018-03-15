@@ -14,4 +14,16 @@ describe('Video model', () => {
     assert.strictEqual(video.title, `${videoTitle}`);
   });
 
+  it('is required', () => {
+    const video = new Video({});
+    video.validateSync();
+    assert.equal(video.errors.title.message, 'Video `Title` is required');
+  })
+
+  it('has a url that is a string', () => {
+    const videoUrl = 1;
+    const video = new Video({ videoUrl: videoUrl });
+
+    assert.strictEqual(video.videoUrl, `${videoUrl}`);
+  });
 });
