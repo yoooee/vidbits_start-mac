@@ -32,18 +32,24 @@ const parseTextFromHTML = (htmlAsString, selector) => {
 
 // Find iFrame with specific src.
 const findIFrameElementBySource = (htmlAsString, src) => {
-  const iframe = jsdom(htmlAsString).querySelector(`iframe[src="${src}"]`);
-  if (iframe !== null) {
-    return iframe;
-  } else {
-    throw new Error(`IFrame with src "${src}" not found in HTML string`);
-  }
+  return findElement(htmlAsString, `iframe[src="${src}"]`);
 };
+
+const findElement = (html, selector) => {
+  const element = jsdom(html).querySelector(selector);
+
+  if (element) {
+    return element;
+  } else {
+    throw new Error(`Element ${selector} not found`);
+  }
+}
 
 module.exports = {
   buildVideoObject,
   seedVideoToDatabase,
   generateRandomUrl,
   parseTextFromHTML,
-  findIFrameElementBySource
+  findIFrameElementBySource,
+  findElement
 };
