@@ -25,7 +25,7 @@ router.get('/:videoid/edit', async (req, res, next) => {
 });
 
 // PUT /videos/:videoid
-router.put('/:videoid', async (req, res, next) => {
+router.post('/:videoid/updates', async (req, res, next) => {
   const videoId = req.params.videoid;
   const video = await Video.findById(videoId);
 

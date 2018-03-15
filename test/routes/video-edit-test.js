@@ -30,7 +30,7 @@ describe('Server path: /videos/:id/edit', () => {
     });
   });
 
-  describe('PUT /videos/:id', () => {
+  describe('POST /videos/:id/updates', () => {
     it('saves the updated information to the database and shows updated information on detail page', async () => {
 
       const existingVideo = await seedVideoToDatabase();
@@ -42,7 +42,7 @@ describe('Server path: /videos/:id/edit', () => {
       };
 
       const response = await request(app)
-        .put(`/videos/${existingVideo._id}`)
+        .post(`/videos/${existingVideo._id}/updates`)
         .type('form')
         .send(updateVideoParams);
 
@@ -67,13 +67,21 @@ describe('Server path: /videos/:id/edit', () => {
       };
 
       const response = await request(app)
-        .put(`/videos/${existingVideo._id}`)
+        .post(`/videos/${existingVideo._id}/updates`)
         .type('form')
         .send(updateVideoParams);
 
       const updatedVideo = await Video.findOne();
 
       assert.equal(response.status, 400);
+
+      const titleInput = findElement(response.text, '#title-input');
+      const videoUrlInput = findElement(response.text, '#videoUrl-input');
+      const descriptionInput = findElement(response.text, '#description-input');
+
+      assert.equal(titleInput.value, updateVideoParams.title);
+      assert.equal(videoUrlInput.value, updateVideoParams.videoUrl);
+      assert.equal(descriptionInput.value, updateVideoParams.description);
     });
   });
 });

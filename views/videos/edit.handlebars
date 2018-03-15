@@ -1,8 +1,6 @@
-<p>EDIT PAGE</p>
 <div class="contents-container">
   <h3>Edit a video</h3>
-  <form action="/videos/{{video.id}}" method="POST" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="_method" value="PUT">
+  <form action="/videos/{{video.id}}/updates" method="POST">
     <input type="text" id="title-input" name="title" value="{{video.title}}">
     {{#with video.errors.title as |error|}}
     <span class="error">{{error.message}}</span>
