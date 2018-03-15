@@ -4,7 +4,7 @@ const {jsdom} = require('jsdom');
 const Video = require('../../models/video');
 const app = require('../../app.js');
 const {connectDatabase, disconnectDatabase} = require('../database-utilities');
-const {parseTextFromHTML, seedVideoToDatabase, generateRandomUrl, findElement} = require('../test-utils');
+const {seedVideoToDatabase, findElement} = require('../test-utils');
 
 describe('Server path: /videos/:id/edit', () => {
 
@@ -12,6 +12,7 @@ describe('Server path: /videos/:id/edit', () => {
   afterEach(disconnectDatabase);
 
   describe('GET /videos/:id/edit', () => {
+
     it('renders an edit page with an update button', async () => {
 
       const video = await seedVideoToDatabase();
@@ -31,6 +32,7 @@ describe('Server path: /videos/:id/edit', () => {
   });
 
   describe('POST /videos/:id/updates', () => {
+
     it('saves the updated information to the database and shows updated information on detail page', async () => {
 
       const existingVideo = await seedVideoToDatabase();

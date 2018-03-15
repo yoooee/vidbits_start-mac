@@ -4,9 +4,8 @@ const {jsdom} = require('jsdom');
 const Video = require('../../models/video');
 const app = require('../../app.js');
 const {connectDatabase, disconnectDatabase} = require('../database-utilities');
-const {parseTextFromHTML, seedVideoToDatabase, generateRandomUrl, findElement} = require('../test-utils');
+const {seedVideoToDatabase} = require('../test-utils');
 
-//describe('DELETE /videos/:id', () => {
 describe('GET /videos/:id/deletions', () => {
 
   beforeEach(connectDatabase);

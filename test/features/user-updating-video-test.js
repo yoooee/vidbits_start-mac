@@ -14,7 +14,7 @@ describe('User edits existing video', () => {
 
     const updatedTitle = 'This is a new title';
     const updatedDescription = 'This is a new description';
-    const updatedVideoUrl = 'http://new-video-url.com';
+    const updatedVideoUrl = generateRandomUrl('youtube.com');
 
     // We should be on the /videos/edit page
     browser.setValue('#title-input', updatedTitle);
