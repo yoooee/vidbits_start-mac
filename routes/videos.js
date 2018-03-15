@@ -43,6 +43,17 @@ router.put('/:videoid', async (req, res, next) => {
   }
 });
 
+router.get('/:videoid/deletions', async (req, res, next) => {
+
+  const videoId = req.params.videoid;
+  const video = await Video.findById(videoId);
+
+  const videoRemoved = await video.remove();
+
+  res.redirect(302, '/videos');
+});
+
+
 router.post('/', async (req, res, next) => {
 
   const video = new Video({
