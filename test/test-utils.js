@@ -45,11 +45,25 @@ const findElement = (html, selector) => {
   }
 }
 
+const createVideoUsingBrowser = (title, url, description) => {
+
+  browser.url('/videos/create');
+
+  // Set form fields with fake data.
+  browser.setValue('#title-input', title);
+  browser.setValue('#videoUrl-input', url);
+  browser.setValue('#description-input', description);
+
+  // Submit the form by clickin the submit button.
+  browser.click('button[id="submit-button"]');
+}
+
 module.exports = {
   buildVideoObject,
   seedVideoToDatabase,
   generateRandomUrl,
   parseTextFromHTML,
   findIFrameElementBySource,
-  findElement
+  findElement,
+  createVideoUsingBrowser
 };

@@ -1,5 +1,5 @@
 const {assert} = require('chai');
-const { generateRandomUrl } = require('../test-utils');
+const { generateRandomUrl, createVideoUsingBrowser } = require('../test-utils');
 
 describe('User deletes an existing video', () => {
 
@@ -9,15 +9,7 @@ describe('User deletes an existing video', () => {
     const testUrl = generateRandomUrl('youtube.com');
     const testDescription = 'A video about barrel aged beer brewing.';
 
-    browser.url('/videos/create');
-
-    // Set form fields with fake data.
-    browser.setValue('#title-input', testTitle);
-    browser.setValue('#videoUrl-input', testUrl);
-    browser.setValue('#description-input', testDescription);
-
-    // Submit the form by clickin the submit button.
-    browser.click('button[id="submit-button"]');
+    createVideoUsingBrowser(testTitle, testUrl, testDescription);
 
     browser.click('a[id="delete-button"]');
 
